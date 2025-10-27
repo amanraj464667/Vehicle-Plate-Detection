@@ -193,7 +193,7 @@ def index():
             file.save(str(filepath))
             
             # Detect plate
-            detector = request.form.get('detector', 'contour')
+            detector = request.form.get('detector', 'yolo')
             ocr_backend = request.form.get('ocr', 'easyocr')
             result = detect_plate_from_image(
                 filepath, detector=detector, ocr_backend=ocr_backend
