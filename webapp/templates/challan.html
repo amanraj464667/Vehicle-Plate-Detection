@@ -1,0 +1,25 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Challan {{ challan_id }}</title>
+    <style>
+      body{font-family: Arial, sans-serif; padding:20px; max-width:800px;}
+      .card{border:1px solid #ddd; padding:20px;}
+      h2{margin-top:0;}
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Traffic Challan</h2>
+      <p><strong>Challan ID:</strong> {{ challan_id }}</p>
+      <p><strong>Plate:</strong> {{ plate }}</p>
+      <p><strong>Reason:</strong> {{ reason }}</p>
+      <p><strong>Fine Amount (INR):</strong> {{ fine }}</p>
+      <p><strong>Timestamp:</strong> {{ timestamp }}</p>
+      <hr/>
+      <p>Please pay the fine within 30 days to avoid further action.</p>
+    </div>
+  </body>
+</html>

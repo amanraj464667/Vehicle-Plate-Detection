@@ -1,0 +1,9 @@
+
+Instructions to create character dataset for CNN training:
+
+1. Collect many cropped character images from various plates (different fonts, sizes, lighting).
+2. Arrange them in folders inside data/char_dataset/ with folder names as class labels: 0-9, A-Z
+   e.g., data/char_dataset/A/, data/char_dataset/B/, ..., data/char_dataset/0/, ..., data/char_dataset/9/
+3. Images can be color or grayscale. Training script will resize to 28x28 and convert to grayscale.
+4. Run the training script:
+   python scripts/train_char_cnn.py --data-dir data/char_dataset --epochs 30 --batch-size 64 --save-path models/char_cnn.h5

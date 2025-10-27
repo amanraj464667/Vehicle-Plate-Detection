@@ -1,0 +1,1 @@
+Generated results (detected images, DB) will be stored here.

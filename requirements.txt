@@ -1,0 +1,15 @@
+opencv-python
+imutils
+easyocr
+flask
+numpy
+pillow
+sqlalchemy
+
+ultralytics
+requests
+
+tensorflow
+scikit-learn
+
+# No additional packages required for the tracker demo

@@ -1,0 +1,70 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>ANPR Dashboard</title>
+    <style>
+      body{font-family: Arial, sans-serif; padding:20px;}
+      table{border-collapse: collapse; width:100%;}
+      th, td{border:1px solid #ddd; padding:8px;}
+      th{background:#f4f4f4;}
+      img{max-height:80px;}
+      .controls{margin-bottom:12px;}
+      .challan-form{margin-top:12px; padding:10px; border:1px solid #ddd; width:400px;}
+    </style>
+  </head>
+  <body>
+    <h2>ANPR Dashboard</h2>
+    <div class="controls">
+      <form id="challanForm" class="challan-form" method="post" action="/challan/create">
+        <h3>Generate Challan</h3>
+        <label>Plate: <input type="text" name="plate" id="plateInput" required></label><br/>
+        <label>Fine amount: <input type="text" name="fine" value="1000"></label><br/>
+        <label>Reason: <input type="text" name="reason" value="Speeding"></label><br/>
+        <button type="submit">Create Challan</button>
+      </form>
+    </div>
+    <table>
+      <tr><th>ID</th><th>Plate</th><th>Timestamp</th><th>Speed (km/h)</th><th>Image</th></tr>
+      {% for r in rows %}
+      <tr>
+        <td>{{ r[0] }}</td>
+        <td>{{ r[1] }}</td>
+        <td>{{ r[2] }}</td>
+        <td>{{ r[3] }}</td>
+        <td>
+          {% if r[4] %}
+            <img src="/static-results/{{ r[4].split('/')[-1] }}" alt="plate">
+          {% else %} - {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    <script>
+      // Hook up the plate input auto-fill when clicking an image
+      document.addEventListener('click', function(e){
+        if(e.target && e.target.tagName === 'IMG'){
+          // try to read plate from the nearby row
+          const tr = e.target.closest('tr');
+          const plate = tr.children[1].innerText;
+          document.getElementById('plateInput').value = plate;
+        }
+      });
+      // handle form submission via fetch to show created challan url
+      document.getElementById('challanForm').addEventListener('submit', async function(ev){
+        ev.preventDefault();
+        const form = ev.target;
+        const data = new FormData(form);
+        const resp = await fetch('/challan/create', {method:'POST', body: data});
+        if(resp.ok){
+          const j = await resp.json();
+          alert('Challan created: ' + j.url);
+          window.open(j.url, '_blank');
+        }else{
+          alert('Failed to create challan');
+        }
+      });
+    </script>
+  </body>
+</html>
